@@ -333,7 +333,7 @@ class _ParticipateScreenState extends State<ParticipateScreen> {
       }
       participate();
     }
-    // TODO: Add done screen with green right mark
+    // DONE: Add done screen with green right mark
 //    Navigator.of(context).pop();
   }
 }

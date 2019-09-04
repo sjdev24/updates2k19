@@ -34,6 +34,7 @@ class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
   final _screenKey = GlobalKey<_UserRegistrationScreenState>();
 
   Map<String, dynamic> _formData = {
+    'department': 'CO',
     'user_type': 0,
     'participated_in': <Map<String, String>>[],
   };
@@ -124,7 +125,7 @@ class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
                       label: 'Last Name',
                       validator: _nonEmptyValidator,
                       onSaved: (value) {
-                        _formData.addAll({'last Name': value});
+                        _formData.addAll({'last_name': value});
                       },
                       inputType: TextInputType.text,
                     ),
@@ -204,7 +205,7 @@ class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
                               value: 'ME',
                             ),
                           ],
-                          value: 'CO',
+                          value: _formData['department'],
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Department',
@@ -215,7 +216,9 @@ class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
                             fillColor: kColorSurface,
                           ),
                           onSaved: (value) {
-                            _formData['department'] = value;
+                            setState(() {
+                              _formData['department'] = value;
+                            });
                           },
                           onChanged: (value) {
                             department = value;
@@ -277,7 +280,11 @@ class _UserRegistrationScreenState extends State<UserRegistrationScreen> {
             onPressed: () => Navigator.pop(context, false),
           ),
           SimpleDialogOption(
-            child: Text('REGISTER', style: Theme.of(context).textTheme.button),
+            child: Text('REGISTER',
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    .copyWith(color: Colors.white)),
             onPressed: () => Navigator.pop(context, true),
           ),
         ],

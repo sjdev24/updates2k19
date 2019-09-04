@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:updates_2k19/models/event.dart';
 import 'package:updates_2k19/models/user.dart';
@@ -31,36 +30,33 @@ class ParticipatedScreenBloc {
     // DONE: Participated screen data retrieval
     _participationDataSubject.sink.add(null);
     List<Map<String, String>> participatedIn = _user.participated_in;
-    List<Participation> tempStorage = [];
-    for (Map<String, String> item in participatedIn) {
-      var event, data;
-      var ds = await _firestoreHelper.eventsCollection
-          .document(item['event_id'])
-          .get(source: Source.serverAndCache);
-      if (ds != null) {
-        ds.data.addAll({'eid': ds.documentID});
-        event = Event.fromJson(ds.data);
-      }
-      ds = await _firestoreHelper.participantsCollection
-          .document(item['event_id'])
-          .get(source: Source.serverAndCache);
-      Map<dynamic, dynamic> dsLeader = ds[item['leader']];
-      Map<String, dynamic> tempData;
-      tempData = dsLeader.map<String, dynamic>((k, v) {
-        return MapEntry(k as String, v);
-      });
-
-      tempStorage.add(Participation(event, tempData));
+    if (_participationData != null) {
+      _participationData.clear();
+    } else {
+      _participationData = [];
     }
-    _brodcastData(tempStorage);
+    for (Map<String, String> item in participatedIn) {
+      Participation value = await _getParticipation(item);
+      _participationData.add(value);
+      _broadcastData(_participationData);
+    }
   }
 
   void dispose() {
 //    _participationDataSubject.sink.close();
   }
 
-  void _brodcastData(List<Participation> tempStorage) {
-    _participationData = tempStorage;
-    _participationDataSubject.sink.add(_participationData);
+  void _broadcastData(List<Participation> tempStorage) {
+    _participationDataSubject.sink.add(tempStorage);
+  }
+
+  Future<Participation> _getParticipation(Map<String, String> item) async {
+    Event event;
+    Map<String, dynamic> data;
+
+    event = await _firestoreHelper.getEvent(item['event_id']);
+    data = await _firestoreHelper.getParticipation(
+        item['event_id'], item['leader']);
+    return Participation(event, data);
   }
 }

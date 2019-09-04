@@ -28,8 +28,11 @@ class EventScreen extends StatelessWidget {
   String _eventType;
 
   void participate(BuildContext context) async {
-    await ConnectivityHelper.checkConnection(context: context);
+    bool x = await ConnectivityHelper.checkConnection(context: context);
     // DONE: Fix this
+
+    if (x == false) return;
+
     _navigatorKey.currentState.push(
       PageRouteBuilder(
         opaque: false,
@@ -127,7 +130,7 @@ class EventScreen extends StatelessWidget {
                     ),
                     child: Image(
                       image: AssetImage(
-                          '${AssetHelper.EVENTS_LOGO}${event.imageID}.png'),
+                          '${AssetHelper.EVENTS_LOGO}${event.imageID}.jpg'),
                     ),
                   ),
                   SizedBox(

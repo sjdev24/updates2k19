@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUsScreen extends StatelessWidget {
-  final String linkedIn = 'www.linkedin.com/in/';
+  final String linkedIn = 'https://www.linkedin.com/in/';
   final String github = 'https://github.com/';
   final String twitter = 'https://twitter.com/';
   final String instagram = 'https://www.instagram.com/';
@@ -33,6 +33,30 @@ class AboutUsScreen extends StatelessWidget {
       'github': "nplimbani",
       'twitter': "np_limbani",
       'insta': 'nplimbani'
+    },
+    {
+      'name': "Parth Roy",
+      'branch': "CO-M/Batch 2020",
+      'linkedin': "royaldream20",
+      'github': "royaldream",
+      'twitter': "parthroy1",
+      'insta': 'parth_roy_20'
+    },
+    {
+      'name': "Abhi Sondagar",
+      'branch': "CO-M/Batch 2021",
+      'linkedin': "",
+      'github': "abhisondagar605",
+      'twitter': "AbhiSondagar",
+      'insta': 'abhi_sondagar_'
+    },
+    {
+      'name': "Yagnik Beladiya",
+      'branch': "CO-E/Batch 2021",
+      'linkedin': "Yagnik-Beladiya-b30887162",
+      'github': "ykbeladiya",
+      'twitter': "beladiya_yagnik",
+      'insta': 'beladiyayagnik'
     },
   ];
 

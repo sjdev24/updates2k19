@@ -46,9 +46,10 @@ class NoInternetScreen extends StatelessWidget {
                       elevation: 4.0,
                       onPressed: () async {
                         await ConnectivityHelper.checkConnection();
-                        bool connected =
-                            ConnectivityHelper.internetConnectivity.value;
-                        if (connected == true) Navigator.of(context).pop();
+//                        bool connected =
+//                            ConnectivityHelper.internetConnectivity.value;
+//                        if (connected == true) Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'RETRY',

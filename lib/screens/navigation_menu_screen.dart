@@ -17,8 +17,11 @@ class NavigationMenuScreen extends StatelessWidget {
         assert(menuItems != null);
 
   Widget _buildCategory(NavigationMenuItem menuItem, BuildContext context) {
-    final menuItemString =
-        menuItem.toString().replaceAll('NavigationMenuItem.', '').toUpperCase();
+    final menuItemString = menuItem
+        .toString()
+        .replaceAll('NavigationMenuItem.', '')
+        .replaceAll('_', ' ')
+        .toUpperCase();
     final ThemeData theme = Theme.of(context);
 
     return GestureDetector(

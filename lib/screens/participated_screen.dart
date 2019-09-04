@@ -32,7 +32,7 @@ class _ParticipatedScreenState extends State<ParticipatedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var connStatus = ConnectivityHelper.checkConnection();
+//    bool connStatus = ConnectivityHelper.internetConnectivity;
     return Consumer<User>(
       builder: (BuildContext context, User value, Widget child) {
         if (_bloc != null) _bloc.dispose();
@@ -45,7 +45,9 @@ class _ParticipatedScreenState extends State<ParticipatedScreen> {
                 !snapshot.hasData ||
                 snapshot.data.length == 0)
               return Center(
-                child: Text('No Data'),
+                child: CircularProgressIndicator(
+                  value: null,
+                ),
               );
             return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
@@ -73,6 +75,8 @@ class _ParticipatedScreenState extends State<ParticipatedScreen> {
         ? (snapshot.data[index].data['paid'] ? Colors.green : Colors.red)
         : Colors.green;
     String qrEncrypted = _getEncrypted(snapshot.data[index].data['qr_string']);
+//    print(snapshot.data[index].e.event_name);
+//    print(qrEncrypted);
     return Container(
       constraints: BoxConstraints.expand(width: constraints.maxWidth),
       child: Card(

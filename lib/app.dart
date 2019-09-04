@@ -9,8 +9,10 @@ import 'package:updates_2k19/screens/backdrop.dart';
 import 'package:updates_2k19/screens/components/cut_corners_border.dart';
 import 'package:updates_2k19/screens/components/frosted_screen.dart';
 import 'package:updates_2k19/screens/components/loading_screen.dart';
+import 'package:updates_2k19/screens/event_head_screen.dart';
 import 'package:updates_2k19/screens/home_screen.dart';
 import 'package:updates_2k19/screens/login_screen.dart';
+import 'package:updates_2k19/screens/my_event_screen.dart';
 import 'package:updates_2k19/screens/navigation_menu_screen.dart';
 import 'package:updates_2k19/screens/no_internet_screen.dart';
 import 'package:updates_2k19/screens/participated_screen.dart';
@@ -80,6 +82,12 @@ class _MyAppState extends State<MyApp> {
 
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
+  List<List<NavigationMenuItem>> _menuItems = [
+    kStudentNavigationMenuItems,
+    kCoordinatorNavigationMenuItems,
+    kHeadNavigationMenuItems
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -91,33 +99,42 @@ class _MyAppState extends State<MyApp> {
         Provider<GlobalKey<NavigatorState>>.value(value: _navigatorKey),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         navigatorKey: _navigatorKey,
         routes: _routes,
         initialRoute: LoadingScreen.ROUTE_NAME,
-        home: Backdrop(
-          backTitle: Text(
-            'MENU',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              letterSpacing: 0.5,
-            ),
-          ),
-          frontTitle: Text(
-            kEventName.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              letterSpacing: 0.5,
-            ),
-          ),
-          frontLayer: _getFrontLayer(context, _currentMenuItem),
-          backLayer: NavigationMenuScreen(
-            currentMenuItem: _currentMenuItem,
-            menuItems: kStudentNavigationMenuItems,
-            onMenuItemTap: _onNavigationMenuItemTap,
-          ),
-          currentItem: NavigationMenuItem.home,
-        ),
+        home: StreamBuilder<User>(
+            stream: _authHelper.userData,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data == null)
+                return Container(
+                  constraints: BoxConstraints.expand(),
+                  color: kColorSurface,
+                );
+              return Backdrop(
+                backTitle: Text(
+                  'MENU',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                frontTitle: Text(
+                  kEventName.toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                frontLayer: _getFrontLayer(context, _currentMenuItem),
+                backLayer: NavigationMenuScreen(
+                  currentMenuItem: _currentMenuItem,
+                  menuItems: _menuItems[snapshot.data.user_type],
+                  onMenuItemTap: _onNavigationMenuItemTap,
+                ),
+                currentItem: NavigationMenuItem.home,
+              );
+            }),
         onGenerateRoute: _getRoute,
         theme: _kUpdatesTheme,
       ),
@@ -152,7 +169,7 @@ class _MyAppState extends State<MyApp> {
       case NavigationMenuItem.home:
         return HomeScreen();
         break;
-      case NavigationMenuItem.allEvents:
+      case NavigationMenuItem.all_Events:
         return AllEventsScreen();
         break;
       case NavigationMenuItem.participated:
@@ -161,19 +178,16 @@ class _MyAppState extends State<MyApp> {
       case NavigationMenuItem.sponsors:
         return SponsorsScreen();
         break;
-      case NavigationMenuItem.developerTeam:
+      case NavigationMenuItem.developer_Team:
         return AboutUsScreen();
         break;
-      case NavigationMenuItem.myEvent:
-        // TODO: Event coordinator screen
-        break;
-      case NavigationMenuItem.addEvent:
-        // TODO: AddEventScreen
+      case NavigationMenuItem.my_Event:
+        return MyEventScreen();
         break;
       case NavigationMenuItem.updates2k19:
-        // TODO: HeadCoordinatorScreen
+        return EventHeadScreen();
         break;
-      case NavigationMenuItem.updates2k19Team:
+      case NavigationMenuItem.updates2k19_Team:
         return UpdatesTeam();
         break;
     }
@@ -192,7 +206,7 @@ class _MyAppState extends State<MyApp> {
       }
     });
     _authHelper.userData.listen((userData) {
-      print('UserData: ${userData.email} ${userData.uid}');
+      print('User data refreshed');
       _user = userData;
     });
     return _user;

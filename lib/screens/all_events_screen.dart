@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,7 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
     int attachTag = tag;
     var base = Theme.of(context);
     String imagePath =
-        '${AssetHelper.EVENTS_LOGO}${event.event_name.toLowerCase().replaceAll(' ', '_')}.png';
+        '${AssetHelper.EVENTS_LOGO}${event.event_name.toLowerCase().replaceAll(' ', '_')}.jpg';
     return Container(
       constraints: BoxConstraints.expand(width: constraints.maxWidth),
       child: Stack(
@@ -87,8 +88,19 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
                     SizedBox(
                       height: 24.0,
                     ),
-                    GestureDetector(
-                      onTap: () {
+                    FlatButton(
+                      color: kColorPrimaryDark,
+                      shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(7),
+                        ),
+                      ),
+                      child: Text(
+                        'TAP HERE TO KNOW MORE',
+                        style: base.textTheme.display2.copyWith(fontSize: 30),
+                        textAlign: TextAlign.center,
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -96,11 +108,6 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
                           ),
                         );
                       },
-                      child: Text(
-                        'TAP HERE TO KNOW MORE',
-                        style: base.textTheme.display2,
-                        textAlign: TextAlign.center,
-                      ),
                     ),
                   ],
                 ),
@@ -110,7 +117,7 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 48.0),
               child: RawMaterialButton(
                 textStyle: base.textTheme.button.copyWith(
                   color: kColorPrimary,
