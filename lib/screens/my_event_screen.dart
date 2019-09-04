@@ -23,14 +23,6 @@ class _MyEventScreenState extends State<MyEventScreen> {
       code = await BarcodeScanner.scan();
     } on Exception {}
 
-//
-//    code =
-//        'ZuK9l/1axbkitz4TaXlRGRDjepHRHAYAaA77S1v3iSDmX3qVObks6AksLCaGhYHne03vvc3hQM2+GXeL+qDbOg==';
-//    // Paid event code
-//    code =
-//        'ZuK9l/1bwrsqvDoVbnlRIxzbe4L5QjEkVAL3Y1nshTXOQGC7e+FT5jIsLFjVvpj0XXvHuprwf4yjU2KPppCAOg==';
-//
-
     bool x = await ConnectivityHelper.checkConnection(context: context);
     if (x == false) return;
     if (code != null && code.isNotEmpty) {

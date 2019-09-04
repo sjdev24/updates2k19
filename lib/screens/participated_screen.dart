@@ -6,7 +6,6 @@ import 'package:updates_2k19/blocs/participated_screen_bloc.dart';
 import 'package:updates_2k19/models/event.dart';
 import 'package:updates_2k19/models/user.dart';
 import 'package:updates_2k19/settings/colors.dart';
-import 'package:updates_2k19/utilities/connectivity_helper.dart';
 import 'package:updates_2k19/utilities/operation_handling.dart';
 
 class ParticipatedScreen extends StatefulWidget {

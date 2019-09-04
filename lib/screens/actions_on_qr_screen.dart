@@ -33,13 +33,13 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
   void initState() {
     super.initState();
 
-    var decrypted;
+    String data;
     if (kRegExpOldQR.hasMatch(widget.qrString)) {
-      decrypted = widget.qrString;
+      data = widget.qrString;
     } else {
-      decrypted = _encrypter.decrypt64(widget.qrString, iv: _iv);
+      data = _encrypter.decrypt64(widget.qrString, iv: _iv);
     }
-    List<String> parts = decrypted.split('.');
+    List<String> parts = data.split('.');
     if (parts.length != 3) {
       _codeHasError = true;
       return;
@@ -82,7 +82,6 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
                           bool isPaidEvent = eventSnapshot.data.is_paid;
                           bool hasUserPaidFee =
                               participationSnapshot.data.data['paid'];
-                          print(participationSnapshot.data.data);
                           return Container(
                             constraints: BoxConstraints.expand(),
                             color: kColorSurface,
