@@ -5,6 +5,7 @@ import 'package:updates_2k19/blocs/participated_screen_bloc.dart';
 import 'package:updates_2k19/models/event.dart';
 import 'package:updates_2k19/models/user.dart';
 import 'package:updates_2k19/settings/colors.dart';
+import 'package:updates_2k19/settings/constants.dart';
 import 'package:updates_2k19/utilities/operation_handling.dart';
 
 class ActionsOnQRScreen extends StatefulWidget {
@@ -31,7 +32,13 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
   @override
   void initState() {
     super.initState();
-    var decrypted = _encrypter.decrypt64(widget.qrString, iv: _iv);
+
+    var decrypted;
+    if (kRegExpOldQR.hasMatch(widget.qrString)) {
+      decrypted = widget.qrString;
+    } else {
+      decrypted = _encrypter.decrypt64(widget.qrString, iv: _iv);
+    }
     List<String> parts = decrypted.split('.');
     if (parts.length != 3) {
       _codeHasError = true;
@@ -75,6 +82,7 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
                           bool isPaidEvent = eventSnapshot.data.is_paid;
                           bool hasUserPaidFee =
                               participationSnapshot.data.data['paid'];
+                          print(participationSnapshot.data.data);
                           return Container(
                             constraints: BoxConstraints.expand(),
                             color: kColorSurface,

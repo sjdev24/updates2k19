@@ -60,6 +60,7 @@ class ActionsOnQRBloc {
     Map<String, dynamic> updated = t.data;
     updated['paid'] = true;
     updated['collected_by'] = AuthHelper.instance.userData.value.uid;
+    print(t.e.eid);
     _firestoreHelper.updateParticipation(
       Participation(t.e, {_userDataBehaviorSubject.stream.value.uid: updated}),
     );

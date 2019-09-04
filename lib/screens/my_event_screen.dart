@@ -6,6 +6,7 @@ import 'package:updates_2k19/blocs/my_event_bloc.dart';
 import 'package:updates_2k19/models/user.dart';
 import 'package:updates_2k19/screens/actions_on_qr_screen.dart';
 import 'package:updates_2k19/settings/colors.dart';
+import 'package:updates_2k19/utilities/connectivity_helper.dart';
 
 class MyEventScreen extends StatefulWidget {
   @override
@@ -30,6 +31,8 @@ class _MyEventScreenState extends State<MyEventScreen> {
 //        'ZuK9l/1bwrsqvDoVbnlRIxzbe4L5QjEkVAL3Y1nshTXOQGC7e+FT5jIsLFjVvpj0XXvHuprwf4yjU2KPppCAOg==';
 //
 
+    bool x = await ConnectivityHelper.checkConnection(context: context);
+    if (x == false) return;
     if (code != null && code.isNotEmpty) {
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,

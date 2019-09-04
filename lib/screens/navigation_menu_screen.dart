@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:updates_2k19/settings/colors.dart';
 import 'package:updates_2k19/settings/constants.dart';
 
@@ -61,10 +62,23 @@ class NavigationMenuScreen extends StatelessWidget {
       child: Container(
         color: kColorPrimaryDark,
         padding: EdgeInsets.only(top: 40.0),
-        child: ListView(
-            children: menuItems
-                .map((NavigationMenuItem c) => _buildCategory(c, context))
-                .toList()),
+        child: Column(
+          children: <Widget>[
+            ListView(
+                shrinkWrap: true,
+                children: menuItems
+                    .map((NavigationMenuItem c) => _buildCategory(c, context))
+                    .toList()),
+            SizedBox(
+              height: 24,
+            ),
+            // TODO: Update Version Code
+            Text(
+              'v1.1.1',
+              style: Theme.of(context).textTheme.caption.copyWith(fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
