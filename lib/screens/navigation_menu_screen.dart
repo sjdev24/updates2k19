@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 import 'package:updates_2k19/settings/colors.dart';
 import 'package:updates_2k19/settings/constants.dart';
 
@@ -72,11 +71,20 @@ class NavigationMenuScreen extends StatelessWidget {
             SizedBox(
               height: 24,
             ),
-            // TODO: Update Version Code
-            Text(
-              'v1.1.1',
-              style: Theme.of(context).textTheme.caption.copyWith(fontSize: 12),
-            ),
+            StreamBuilder<String>(
+                stream: kVersionName.asStream(),
+                builder: (context, snapshot) {
+                  if (snapshot == null ||
+                      !snapshot.hasData ||
+                      snapshot.data.length == 0) return SizedBox();
+                  return Text(
+                    snapshot.data,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(fontSize: 12),
+                  );
+                }),
           ],
         ),
       ),

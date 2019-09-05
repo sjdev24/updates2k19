@@ -82,6 +82,14 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
                           bool isPaidEvent = eventSnapshot.data.is_paid;
                           bool hasUserPaidFee =
                               participationSnapshot.data.data['paid'];
+
+                          bool isAttendanceAllowed =
+                              eventSnapshot.data.allow_attendance;
+                          var isUserAttendanceMarked = (participationSnapshot
+                                  .data.data['attended'] is List)
+                              ? false
+                              : true;
+
                           return Container(
                             constraints: BoxConstraints.expand(),
                             color: kColorSurface,
@@ -174,6 +182,26 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
                                           ),
                                         )
                                       : SizedBox(),
+
+                                  // Mark Attendance Section
+                                  isAttendanceAllowed &&
+                                          !isUserAttendanceMarked &&
+                                          (isPaidEvent ? hasUserPaidFee : true)
+                                      ? Container(
+                                          child: RaisedButton(
+                                            color: Colors.lightGreenAccent,
+                                            child: Text(
+                                              'MARK PRESENT',
+                                              style: base.textTheme.button
+                                                  .copyWith(
+                                                      color:
+                                                          kColorTextPrimaryLight),
+                                            ),
+                                            onPressed: () =>
+                                                processAttendance(),
+                                          ),
+                                        )
+                                      : SizedBox(),
                                 ],
                               ),
                             ),
@@ -190,6 +218,11 @@ class _ActionsOnQRScreenState extends State<ActionsOnQRScreen> {
 
   processPayment() {
     _bloc.markPaid();
+    Navigator.of(context).pop();
+  }
+
+  processAttendance() {
+    _bloc.markPresent();
     Navigator.of(context).pop();
   }
 }

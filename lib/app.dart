@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updates_2k19/models/user.dart';
@@ -78,6 +77,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
     _initiateApp();
+//    grantCoordinatorAccess();
   }
 
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();

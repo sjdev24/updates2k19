@@ -48,9 +48,11 @@ class ActionsOnQRBloc {
       Future<Map<String, dynamic>> participationData =
           _firestoreHelper.getParticipation(event.eid, event.uid);
       participationData.then((value) {
-        Participation p =
-            Participation(_eventDataBehaviorSubject.stream.value, value);
-        _participationDataBehaviorSubject.add(p);
+        _eventDataBehaviorSubject.stream.listen((data) {
+          Participation p =
+              Participation(_eventDataBehaviorSubject.stream.value, value);
+          _participationDataBehaviorSubject.add(p);
+        });
       });
     });
   }
@@ -60,6 +62,16 @@ class ActionsOnQRBloc {
     Map<String, dynamic> updated = t.data;
     updated['paid'] = true;
     updated['collected_by'] = AuthHelper.instance.userData.value.uid;
+    _firestoreHelper.updateParticipation(
+      Participation(t.e, {_userDataBehaviorSubject.stream.value.uid: updated}),
+    );
+  }
+
+  markPresent() {
+    var t = _participationDataBehaviorSubject.stream.value;
+    Map<String, dynamic> updated = t.data;
+    updated['attended'] = true;
+    updated['present_marked_by'] = AuthHelper.instance.userData.value.uid;
     _firestoreHelper.updateParticipation(
       Participation(t.e, {_userDataBehaviorSubject.stream.value.uid: updated}),
     );

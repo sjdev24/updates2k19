@@ -21,24 +21,27 @@ class Event {
   final String poster;
   final String flyer;
   final String ln_hindi;
+  final bool allow_attendance;
 
   Event(
-      this.eid,
-      this.event_name,
-      this.event_schedule,
-      this.description,
-      this.team_size,
-      this.is_paid,
-      this.amount,
-      this.faculty_head,
-      this.student_coord,
-      this.student_vol,
-      this.rounds,
-      this.poster,
-      this.flyer,
-      this.need_abstract,
-      this.end_registration,
-      this.ln_hindi);
+    this.eid,
+    this.event_name,
+    this.event_schedule,
+    this.description,
+    this.team_size,
+    this.is_paid,
+    this.amount,
+    this.faculty_head,
+    this.student_coord,
+    this.student_vol,
+    this.rounds,
+    this.poster,
+    this.flyer,
+    this.need_abstract,
+    this.end_registration,
+    this.ln_hindi,
+    this.allow_attendance,
+  );
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 

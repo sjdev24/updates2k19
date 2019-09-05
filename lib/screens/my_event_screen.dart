@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:updates_2k19/blocs/my_event_bloc.dart';
@@ -19,6 +17,7 @@ class _MyEventScreenState extends State<MyEventScreen> {
   MyEventBloc _bloc;
 
   void _scanQR() async {
+    code = null;
     try {
       code = await BarcodeScanner.scan();
     } on Exception {}

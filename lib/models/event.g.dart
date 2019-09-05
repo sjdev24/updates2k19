@@ -26,6 +26,7 @@ Event _$EventFromJson(Map<String, dynamic> json) {
     json['need_abstract'] as bool,
     json['end_registration'] == null ? null : json['end_registration'].toDate(),
     json['ln_hindi'] as String,
+    json['allow_attendance'] as bool,
   );
 }
 
