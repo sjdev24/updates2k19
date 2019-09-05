@@ -27,6 +27,8 @@ class EventScreen extends StatelessWidget {
   bool _teamEvent;
   String _eventType;
 
+  User _user;
+
   void participate(BuildContext context) async {
     bool x = await ConnectivityHelper.checkConnection(context: context);
     // DONE: Fix this
@@ -75,6 +77,7 @@ class EventScreen extends StatelessWidget {
     ThemeData base = Theme.of(context);
     _teamEvent = event.team_size > 1;
     _eventType = _teamEvent ? 'Team' : 'Individual';
+    _user = Provider.of<User>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -97,15 +100,18 @@ class EventScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                   ),
-                  RaisedButton(
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(7.0))),
-                    elevation: 12.0,
-                    child: Text('REGISTER'),
-                    onPressed: () {
-                      participate(context);
-                    },
-                  ),
+                  _user.user_type != 2
+                      ? RaisedButton(
+                          shape: BeveledRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(7.0))),
+                          elevation: 12.0,
+                          child: Text('REGISTER'),
+                          onPressed: () {
+                            participate(context);
+                          },
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

@@ -77,7 +77,6 @@ class _MyAppState extends State<MyApp> {
       });
     });
     _initiateApp();
-//    grantCoordinatorAccess();
   }
 
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
